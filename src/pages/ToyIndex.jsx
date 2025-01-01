@@ -6,21 +6,25 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadToys, removeToy, saveToy } from "../store/actions/toy.actions.js"
 import { SET_FILTER_BY } from "../store/reducers/toy.reducer.js"
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector, /*useSearchParams*/ } from 'react-redux'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export function ToyIndex() {
 
-    const todos = useSelector(storeState => storeState.todoModule.todos)
-    const isLoading = useSelector(storeState => storeState.todoModule.isLoading)
-    const filterBy = useSelector(storeState => storeState.todoModule.filterBy)
+    const toys = useSelector(storeState => storeState.toyModule.toys)
+    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const dispatch = useDispatch()
 
     // Special hook for accessing search-params:
-    const [searchParams, setSearchParams] = useSearchParams()
+    
+    // TODO - how to use search params ???
+    //const [searchParams, setSearchParams] = useSearchParams()
 
-    const defaultFilter = toyService.getFilterFromSearchParams(searchParams)
+    //const defaultFilter = toyService.getFilterFromSrcParams(searchParams)
+
+    // TODO - search params
 
     useEffect(() => {
             loadToys()
@@ -29,7 +33,6 @@ export function ToyIndex() {
                 showErrorMsg('Cannot load toys')
             })
     }, [filterBy])
-
 
 
 
@@ -47,7 +50,20 @@ export function ToyIndex() {
                 showErrorMsg('Cannot remove toy ' + toyId)
             })
     }
+    
 
+    function onEditToy(toy) {
+        const price = +prompt('New price?')
+        const toyToSave = { ...toy, price }
+
+        saveToy(toyToSave)
+            .then((savedToy) => {
+                showSuccessMsg(`Toy updated to price: $${savedToy.price}`)
+            })
+            .catch(err => {
+                showErrorMsg('Cannot update toy')
+            })
+    }
 
     
     function onAddRandomToy() {

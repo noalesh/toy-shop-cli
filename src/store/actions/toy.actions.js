@@ -3,6 +3,7 @@ import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TO
 import { store } from "../store.js";
 
 export function loadToys() {
+
     const filterBy = store.getState().toyModule.filterBy
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     return toyService.query(filterBy)

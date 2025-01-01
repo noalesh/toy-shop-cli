@@ -16,7 +16,7 @@ export function HomePage() {
                 <br></br>
                 Please feel free to contact us for any reason!
                 </p>
-            <img src={imgUrl} width="36%" alt="Miss Toy logo" />
+            <img src={imgUrl} width="13%" alt="Miss Toy logo" />
         </section >
     )
 }

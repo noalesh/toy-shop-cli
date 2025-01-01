@@ -94,7 +94,7 @@ function getEmptyToyNoId() {
 function getRandomToy() {
     return {
         id: utilService.makeId(),
-        name: utilService.makeLorem(14),
+        name: utilService.makeLorem(2),
         price: utilService.getRandomIntInclusive(1, 555),
         labels: _getRandomLabels(),
         createdAt: utilService.getRandomIntInclusive(1000000000, 9999999999),
@@ -113,11 +113,11 @@ function _getRandomLabels(){
         "birthday gifts", "party", "on wheels", "books", "art", "box game", 
         "for individual game", "for multiple players", "hand crafted"]
     const howManyLabels = utilService.getRandomIntInclusive(1, 4)
-    const chosenLables = []
+    let chosenLables = []
     // loop "howManyLabels" times and get a random label
     for (let i=0; i<howManyLabels; i++){
-        const random = Math.floor(Math.random() * months.length);
-        chosenLables += optionalLabels[random]
+        const random = Math.floor(Math.random() * optionalLabels.length);
+        chosenLables = [...chosenLables, optionalLabels[random]]
     }
     // delete all duplicates and return
     console.log("DEBUG - from toy.service._getRandomLabels result : ")
@@ -147,11 +147,15 @@ function getEmptyMsgWithId() {
 }
 
 function _createToys() {
+    console.log("inside _createToys")
+
     let toys = utilService.loadFromStorage(STORAGE_KEY)
+    console.log("inside _createToys, toys is : ", toys)
+
     if (!toys || !toys.length) {
         toys = []
         for (let i = 0; i < 20; i++) {
-            const toy = getRandomToy
+            const toy = getRandomToy()
             toys.push(toy)
         }
         utilService.saveToStorage(STORAGE_KEY, toys)
