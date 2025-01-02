@@ -93,7 +93,7 @@ function getEmptyToyNoId() {
 
 function getRandomToy() {
     return {
-        id: utilService.makeId(),
+        _id: utilService.makeId(),
         name: utilService.makeLorem(2),
         price: utilService.getRandomIntInclusive(1, 555),
         labels: _getRandomLabels(),
@@ -140,7 +140,7 @@ function getFilterFromSrcParams(searchParams) {
 function getEmptyMsgWithId() {
     // "by" is an object: {_id: '', fullname: ''}
     return {
-        id: utilService.makeId(),
+        _id: utilService.makeId(),
         txt: '',
         by: '',
     }
@@ -167,6 +167,6 @@ function _createToys() {
 
 function _createToy() {
     const newToy = getEmptyToy()
-    newToy.id = utilService.makeId()
+    newToy._id = utilService.makeId()
     return newToy
 }
